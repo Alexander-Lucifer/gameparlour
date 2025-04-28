@@ -183,7 +183,7 @@ public class FlappyBirdGame extends JPanel implements ActionListener, KeyListene
         FlappyBirdGame game = new FlappyBirdGame();
         frame.add(game);
         frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
     }
