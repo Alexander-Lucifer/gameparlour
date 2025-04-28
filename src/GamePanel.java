@@ -25,6 +25,9 @@ import javax.swing.Timer;
 import javax.swing.JOptionPane;
 
 
+import javax.swing.JFrame;
+
+
 
 
 
@@ -64,16 +67,22 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private static final int WINNING_SCORE = 5;
 
 
+    private JFrame gameFrame;  // Reference to the game window
 
 
 
-    public GamePanel(String player1Name, String player2Name) {
+
+
+    public GamePanel(String player1Name, String player2Name, JFrame gameFrame) {
 
 
         this.player1Name = player1Name;
 
 
         this.player2Name = player2Name;
+
+
+        this.gameFrame = gameFrame;
 
 
 
@@ -355,14 +364,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 
 
-            // Save score to database
-
-
-
-
-
-
-
             // Show game over message
 
 
@@ -378,13 +379,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
                             player1Name + " " + scoreLeft + " - " + player2Name + " " + scoreRight);
 
 
+            // Close the game window and return to main menu
 
 
-
-            // Show high scores
-
+            if (gameFrame != null) {
 
 
+                gameFrame.dispose();
+
+
+            }
 
 
         }

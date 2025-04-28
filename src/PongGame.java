@@ -16,6 +16,10 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
+
 
 
 
@@ -106,7 +110,7 @@ public class PongGame {
             JFrame frame = new JFrame("Pong Game");
 
 
-            GamePanel gamePanel = new GamePanel(player1Name, player2Name);
+            GamePanel gamePanel = new GamePanel(player1Name, player2Name, frame);
 
 
 
@@ -119,6 +123,16 @@ public class PongGame {
 
 
             frame.add(gamePanel);
+
+
+            // Center the window manually
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            int x = (screenSize.width - frame.getWidth()) / 2;
+            int y = (screenSize.height - frame.getHeight()) / 2;
+            frame.setLocation(x, y);
+
+
+            frame.setResizable(false);
 
 
             frame.setVisible(true);
