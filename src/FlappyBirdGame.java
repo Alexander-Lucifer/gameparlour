@@ -11,7 +11,11 @@ public class FlappyBirdGame extends JPanel implements ActionListener, KeyListene
     private boolean gameRunning = false;
     private boolean showHomePage = true;
     private int score = 0;
-    private int highScore = 0;
+    private static final int HIGH_SCORE_X = 10;
+    private static final int HIGH_SCORE_Y = 30;
+    private int highScore;
+    private long startTime;
+    private long playTime;
 
     private ArrayList<Rectangle> pillars;
     private Timer timer;
@@ -26,6 +30,9 @@ public class FlappyBirdGame extends JPanel implements ActionListener, KeyListene
 
         pillars = new ArrayList<>();
         timer = new Timer(20, this);
+
+        highScore = DatabaseUtil.getHighScore("FlappyBird");
+        startTime = System.currentTimeMillis();
 
         setupHomePage();
     }
@@ -109,7 +116,7 @@ public class FlappyBirdGame extends JPanel implements ActionListener, KeyListene
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.BOLD, 20));
         g.drawString("Score: " + score, 20, 30);
-        g.drawString("High Score: " + highScore, 230, 30);
+        g.drawString("High Score: " + highScore, HIGH_SCORE_X, HIGH_SCORE_Y);
 
         // Instructions or Game Over
         g.setFont(new Font("Arial", Font.BOLD, 20));
@@ -155,8 +162,10 @@ public class FlappyBirdGame extends JPanel implements ActionListener, KeyListene
     private void endGame() {
         gameRunning = false;
         timer.stop();
+        playTime = (System.currentTimeMillis() - startTime) / 1000; // Convert to seconds
         if (score > highScore) {
             highScore = score;
+            DatabaseUtil.saveGameScore("FlappyBird", score, playTime);
         }
     }
 
