@@ -8,7 +8,7 @@ public class SnakeGame extends JFrame {
     SnakeGame() {
         this.add(new Panel());
         this.setTitle("Snake Game");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setResizable(false);
         this.pack();
         this.setVisible(true);

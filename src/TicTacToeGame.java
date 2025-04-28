@@ -10,7 +10,7 @@ public class TicTacToeGame extends JFrame implements ActionListener {
         setTitle("Tic Tac Toe");
         setSize(400, 400);
         setLayout(new GridLayout(3, 3));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
         initializeButtons();
