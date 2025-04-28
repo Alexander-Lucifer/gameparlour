@@ -41,6 +41,10 @@ class Panel extends JPanel implements ActionListener {
     boolean running = false;
     Timer timer;
     Random random;
+    private static final int HIGH_SCORE_X = 10;
+    private static final int HIGH_SCORE_Y = 30;
+    private long startTime;
+    private long playTime;
 
     Panel() {
         random = new Random();
@@ -49,6 +53,8 @@ class Panel extends JPanel implements ActionListener {
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapter());
         showDifficultyScreen(); // Show difficulty selection screen
+        highScore = DatabaseUtil.getHighScore("Snake");
+        startTime = System.currentTimeMillis();
     }
 
     public void showDifficultyScreen() {
@@ -81,7 +87,8 @@ class Panel extends JPanel implements ActionListener {
         timer.start();
     }
 
-    public void paintComponent(Graphics g) {
+    @Override
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         draw(g);
     }
@@ -108,7 +115,7 @@ class Panel extends JPanel implements ActionListener {
             g.setFont(new Font("Ink Free", Font.BOLD, 30));
             FontMetrics metrics = getFontMetrics(g.getFont());
             g.drawString("Score: " + applesEaten, (SCREEN_WIDTH - metrics.stringWidth("Score: " + applesEaten)) / 2, g.getFont().getSize());
-            g.drawString("High Score: " + highScore, 10, SCREEN_HEIGHT - 10);
+            g.drawString("High Score: " + highScore, HIGH_SCORE_X, HIGH_SCORE_Y);
 
         } else {
             gameOver(g);
@@ -182,6 +189,12 @@ class Panel extends JPanel implements ActionListener {
         g.drawString("Score: " + applesEaten, (SCREEN_WIDTH - metrics2.stringWidth("Score: " + applesEaten)) / 2, SCREEN_HEIGHT / 2 + 50);
 
         g.drawString("Press 'R' to Restart", (SCREEN_WIDTH - metrics2.stringWidth("Press 'R' to Restart")) / 2, SCREEN_HEIGHT / 2 + 100);
+
+        playTime = (System.currentTimeMillis() - startTime) / 1000; // Convert to seconds
+        if (applesEaten > highScore) {
+            highScore = applesEaten;
+            DatabaseUtil.saveGameScore("Snake", applesEaten, playTime);
+        }
     }
 
     public void actionPerformed(ActionEvent e) {
